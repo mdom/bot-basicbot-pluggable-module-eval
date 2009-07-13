@@ -1,0 +1,67 @@
+NAME
+    Bot::BasicBot::Pluggable::Module::Eval - Evaluate perl code in your
+    channel
+
+VERSION
+    Version 0.02
+
+SYNOPSIS
+    This module evaluate any perl code and returns the output to the
+    questioner. The code is run in a forked process, so the bot is still
+    active while running the code. This module uses Safe to sandbox the
+    running code, so please refer to its documentation for any security
+    implications.
+
+    This module does not print the return code of the executed code back to
+    the channel, so you have to handle this yourself.
+
+        !load Eval
+        perl eval print "foo"
+        perl eval foreach (qw(foo bar)) { print }
+
+AUTHOR
+    Mario Domgoergen, "<dom at math.uni-bonn.de>"
+
+BUGS
+    Please report any bugs or feature requests to
+    "bug-bot-basicbot-pluggable-module-eval at rt.cpan.org", or through the
+    web interface at
+    <http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Bot-BasicBot-Pluggable-M
+    odule-Eval>. I will be notified, and then you'll automatically be
+    notified of progress on your bug as I make changes.
+
+TODO
+    *   Long running compartments
+
+    *   More tests, but i need to patch Test::Bot::BasicBot::Pluggable fist
+        as it is not able to emulate forkit in the moment.
+
+SUPPORT
+    You can find documentation for this module with the perldoc command.
+
+        perldoc Bot::BasicBot::Pluggable::Module::Eval
+
+    You can also look for information at:
+
+    * RT: CPAN's request tracker
+        <http://rt.cpan.org/NoAuth/Bugs.html?Dist=Bot-BasicBot-Pluggable-Mod
+        ule-Eval>
+
+    * AnnoCPAN: Annotated CPAN documentation
+        <http://annocpan.org/dist/Bot-BasicBot-Pluggable-Module-Eval>
+
+    * CPAN Ratings
+        <http://cpanratings.perl.org/d/Bot-BasicBot-Pluggable-Module-Eval>
+
+    * Search CPAN
+        <http://search.cpan.org/dist/Bot-BasicBot-Pluggable-Module-Eval>
+
+SEE ALSO
+    Bot::BasicBot::Pluggable, Safe
+
+COPYRIGHT & LICENSE
+    Copyright 2009 Mario Domgoergen, all rights reserved.
+
+    This program is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
