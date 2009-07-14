@@ -1,6 +1,6 @@
 ---
 name: Bot-BasicBot-Pluggable-Module-Eval
-version: 0.02
+version: 0.03
 author:
   - 'Mario Domgoergen <dom@math.uni-bonn.de>'
 abstract: Evaluate perl code in your channel
@@ -8,7 +8,7 @@ license: perl
 resources:
   license: ~
 requires:
-  Bot::BasicBot::Pluggable: 0
+  Bot::BasicBot::Pluggable: 0.79
   Safe: 0
   parent: 0
 build_requires:
@@ -16,7 +16,7 @@ build_requires:
 provides:
   Bot::BasicBot::Pluggable::Module::Eval:
     file: lib/Bot/BasicBot/Pluggable/Module/Eval.pm
-    version: 0.02
+    version: 0.03
 generated_by: Module::Build version 0.32
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html

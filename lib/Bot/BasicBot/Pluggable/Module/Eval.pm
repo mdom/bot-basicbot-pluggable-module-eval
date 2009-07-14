@@ -55,7 +55,7 @@ Bot::BasicBot::Pluggable::Module::Eval - Evaluate perl code in your channel
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =head1 SYNOPSIS
 
