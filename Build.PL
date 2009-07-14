@@ -10,7 +10,7 @@ my $builder = Module::Build->new(
     requires          => {
         Safe                       => 0,
         parent                     => 0,
-        'Bot::BasicBot::Pluggable' => 0.76,
+        'Bot::BasicBot::Pluggable' => 0.79,
     },
     build_requires     => { 'Test::More' => 0, },
     add_to_cleanup     => ['Bot-BasicBot-Pluggable-Module-Eval-*'],
