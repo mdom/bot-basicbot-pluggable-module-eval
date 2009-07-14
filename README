@@ -3,7 +3,7 @@ NAME
     channel
 
 VERSION
-    Version 0.02
+    Version 0.03
 
 SYNOPSIS
     This module evaluate any perl code and returns the output to the
@@ -18,6 +18,19 @@ SYNOPSIS
         !load Eval
         perl eval print "foo"
         perl eval foreach (qw(foo bar)) { print }
+
+VARIABLES
+    permit => [ $op ]
+        Permit the listed operators to be used when compiling code in the
+        compartment. You can list opcodes by names, or use a tag name; see
+        "Predefined Opcode Tags" in Opcode. This variable is not accessable
+        as user variabe due security concerns. This defaults to ':default'
+        (sic!).
+
+    persistent => 0|1
+        If this variable is true (default), the compartments are not
+        generated for every request, but are safed on a per channel basis.
+        Please call *perl clear* to restart the compartment.
 
 AUTHOR
     Mario Domgoergen, "<dom at math.uni-bonn.de>"

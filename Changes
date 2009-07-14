@@ -1,5 +1,14 @@
 Revision history for Bot-BasicBot-Pluggable-Module-Eval
 
-0.01    Date/time
-        First version, released on an unsuspecting world.
+0.04	14.07.2009
+
+	* document variables
+
+0.03	14.07.2009
+
+	* we need at least Bot::BasicBot::Pluggable 0.79
+
+0.02	13.07.2009
+
+	* Initial version
 

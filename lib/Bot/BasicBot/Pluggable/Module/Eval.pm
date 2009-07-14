@@ -5,47 +5,69 @@ use strict;
 use Safe;
 use parent 'Bot::BasicBot::Pluggable::Module';
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 sub init {
     my $self = shift;
-    $self->config( { permit => [':default'],  } );
+    $self->config( { permit => [':default'], persistent => 1 } );
+    $self->{compartments} = {};
 }
 
 sub told {
     my ( $self, $message ) = @_;
-    my $body = $message->{body};
+    my $body    = $message->{body};
+    my $channel = $message->{channel};
+
+    if ( $channel eq 'msg' ) {
+        $channel = $message->{who};
+    }
+
     my ( $command, $rest ) = split( ' ', $body, 2 );
 
     if ( $command eq 'perl' ) {
         my ( $subcommand, $args ) = split( ' ', $rest, 2 );
         if ( $subcommand eq 'eval' ) {
+            $self->new_compartment($channel);
+
             $self->bot->forkit(
                 run       => \&evaluate,
-                arguments => [ $args, @{ $self->get('permit') } ],
-                channel => $message->{channel},
-                who => $message->{who},
-                address => $message->{address},
+                arguments => [ $self->{compartments}->{$channel}, $args ],
+                channel   => $message->{channel},
+                who       => $message->{who},
+                address   => $message->{address},
             );
             return 1;
 
         }
-     }
-     return;
+        elsif ( $subcommand eq 'clear' ) {
+	    ## Only clear the compartment if we have to
+            $self->new_compartment($channel) if $self->get('persistent');
+        }
+    }
+    return;
+}
+
+sub new_compartment {
+    my ( $self, $channel ) = @_;
+    if ( !$self->{compartments}->{$channel} or !$self->get('persistent') ) {
+        my $cpt = Safe->new();
+        $cpt->permit( $self->get('permit') );
+        $self->{compartments}->{$channel} = $cpt;
+        return $cpt;
+    }
+    return;
 }
 
 sub evaluate {
-    my ( $body, $code, @op_codes ) = @_;
-    my $cpt = Safe->new();
-    $cpt->permit(@op_codes);
+    my ( $body, $cpt, $code ) = @_;
     $cpt->reval($code) or print "$@";
     print "\n";
 }
 
 sub help {
-	return "Evaluate perl code. Usage: perl eval <code>."
+    return "Evaluate perl code. Usage: perl eval <code>.";
 }
-	
+
 1;
 __END__
 
@@ -81,7 +103,13 @@ the channel, so you have to handle this yourself.
 Permit the listed operators to be used when compiling code in the
 compartment. You can list opcodes by names, or use a tag name; see
 L<Opcode/"Predefined Opcode Tags">. This variable is not accessable as
-user variabe due security concerns.
+user variabe due security concerns. This defaults to ':default' (sic!).
+
+=item persistent => 0|1
+
+If this variable is true (default), the compartments are not generated
+for every request, but are safed on a per channel basis. Please call
+I<perl clear> to restart the compartment.
 
 =back
 
