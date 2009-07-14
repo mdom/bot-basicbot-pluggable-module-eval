@@ -9,7 +9,7 @@ our $VERSION = '0.03';
 
 sub init {
     my $self = shift;
-    $self->config( { permit => [':default'] } );
+    $self->config( { permit => [':default'],  } );
 }
 
 sub told {
@@ -71,6 +71,19 @@ the channel, so you have to handle this yourself.
     !load Eval
     perl eval print "foo"
     perl eval foreach (qw(foo bar)) { print }
+
+=head1 VARIABLES
+
+=over 4
+
+=item permit => [ $op ]
+
+Permit the listed operators to be used when compiling code in the
+compartment. You can list opcodes by names, or use a tag name; see
+L<Opcode/"Predefined Opcode Tags">. This variable is not accessable as
+user variabe due security concerns.
+
+=back
 
 =head1 AUTHOR
 
